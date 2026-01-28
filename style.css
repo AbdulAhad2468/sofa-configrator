@@ -1,6 +1,6 @@
 /* Desktop Swatch Style */
         .swatch-active { 
-            outline: 2px solid #000; 
+            outline: 2px solid color; 
             outline-offset: 2px;
         }
         
@@ -41,3 +41,4 @@
                 z-index: 40;
             }
         }
+
