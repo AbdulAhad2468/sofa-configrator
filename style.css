@@ -1,0 +1,43 @@
+/* Desktop Swatch Style */
+        .swatch-active { 
+            outline: 2px solid #000; 
+            outline-offset: 2px;
+        }
+        
+        /* Mobile Swatch Style */
+        .mobile-swatch-active { 
+            border: 2px solid #5e5c5c !important; 
+            padding: 3px; 
+            background-clip: content-box !important;
+            transform: scale(1.15);
+            z-index: 10;
+        }
+
+        #mobileSwatches {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            min-height: 80px;
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        #canvas-container canvas { width: 100% !important; height: 100% !important; outline: none; }
+        #mobile-menu { transition: transform 0.3s ease-in-out; }
+        .menu-hidden { transform: translateX(100%); }
+
+        /* Floating Panel Adjustment */
+        @media (min-width: 768px) {
+            #config-panel {
+                position: absolute;
+                right: 30px;
+                top: 30px;
+                bottom: 30px;
+                width: 400px;
+                height: calc(100% - 60px);
+                border-radius: 12px;
+                border: 1px solid #eee;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+                z-index: 40;
+            }
+        }

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sofa Configurator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-white text-gray-900 antialiased overflow-hidden">
+
+    <div id="loader" class="fixed inset-0 z-50 flex items-center justify-center bg-white text-[10px] tracking-[0.2em] font-bold">
+        LOADING SYSTEM...
+    </div>
+
+    <div id="mobile-menu" class="fixed inset-0 z-[60] bg-white menu-hidden md:hidden p-10 flex flex-col">
+        <button onclick="toggleMenu()" class="absolute top-10 right-8 text-gray-400 text-2xl font-light">✕</button>
+        <h2 class="text-[18px] font-medium mb-10">Configuration</h2>
+        <div class="mb-8">
+            <label class="text-[11px] font-bold uppercase tracking-wider block mb-4">Select Model</label>
+            <div class="relative">
+                <select id="modelSelectMobile" class="w-full border border-gray-200 rounded-md p-3 text-sm bg-white appearance-none">
+                    <option value="double__sofa.glb">3 Seater Sofa</option>
+                    <option value="single_sofa.glb">Single Lounge</option>
+                </select>
+                <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none opacity-40">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </div>
+            </div>
+        </div>
+        <div class="mt-auto flex flex-col gap-3">
+            <button class="w-full bg-black text-white py-4 rounded-md text-[13px] font-medium flex items-center justify-center gap-3">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                Enquire Now
+            </button>
+            <button onclick="startAR()" class="w-full bg-[#555] text-white py-4 rounded-md text-[13px] font-medium flex items-center justify-center gap-3">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                View at Home
+            </button>
+        </div>
+    </div>
+
+    <div class="relative flex h-screen w-screen bg-[#f8f8f8]">
+        <div id="canvas-container" class="relative flex-grow h-full w-full bg-white">
+            <div class="absolute top-10 left-8 z-10 md:hidden">
+                <h2 class="text-[14px] tracking-[0.4em] font-medium uppercase text-[#4A4A4A] opacity-70">Pentatonic</h2>
+            </div>
+
+            <div onclick="toggleMenu()" class="absolute top-11 right-8 z-10 md:hidden cursor-pointer opacity-40">
+                <div class="w-6 h-[1px] bg-black mb-[5px]"></div>
+                <div class="w-6 h-[1px] bg-black mb-[5px]"></div>
+                <div class="w-6 h-[1px] bg-black"></div>
+            </div>
+
+            <div class="absolute bottom-0 left-0 right-0 z-20 md:hidden">
+                <div class="bg-white w-full pt-6 pb-12 px-8 flex flex-col items-center shadow-[0_-10px_25px_-5px_rgba(0,0,0,0.05)]">
+                    <div id="mobileSwatches" class="no-scrollbar flex gap-6 items-center overflow-x-auto w-full justify-start"></div>
+                </div>
+            </div>
+        </div>
+
+        <aside id="config-panel" class="hidden md:flex p-10 flex-col overflow-y-auto bg-white">
+            <button class="absolute top-6 right-8 text-gray-300 hover:text-black font-light text-lg">✕</button>
+            
+            <header class="mb-6">
+                <h1 class="text-[16px] font-medium text-[#1a1a1a]">Mogensen 2333 Sofa 3 Seater</h1>
+            </header>
+
+            <div class="mb-10">
+                <div class="relative">
+                    <select id="modelSelect" class="w-full border border-gray-200 rounded-md p-4 text-[13px] appearance-none bg-white focus:outline-none cursor-pointer text-gray-400 pr-10">
+                        <option value="double__sofa.glb">3 Seater Sofa</option>
+                        <option value="single_sofa.glb">Single Lounge</option>
+                    </select>
+                    <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none opacity-40">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="mb-10 opacity-50">
+            
+            <div class="mb-10">
+                <label class="text-[11px] font-bold uppercase tracking-wider block mb-5 text-gray-500">Sofa : <span id="sofaLabel" class="font-normal normal-case text-gray-400 ml-1">Cognac</span></label>
+                <div class="flex flex-wrap gap-3" id="desktopSofaSwatches"></div>
+            </div>
+            
+            <hr class="mb-10 opacity-50">
+            
+            <div class="mb-6">
+                <label class="text-[11px] font-bold uppercase tracking-wider block mb-5 text-gray-500">Ottoman : <span id="ottomanLabel" class="font-normal normal-case text-gray-400 ml-1">Cognac</span></label>
+                <div id="desktopOttomanSwatches" class="flex flex-wrap gap-3 mb-8"></div>
+                
+                <div class="relative">
+                    <select id="ottomanToggle" class="w-full border border-gray-200 rounded-md p-4 text-[13px] appearance-none bg-white focus:outline-none cursor-pointer text-gray-400 pr-10">
+                        <option value="with">With Ottoman</option>
+                        <option value="without">Without Ottoman</option>
+                    </select>
+                    <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none opacity-40">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-auto pt-10 flex flex-col gap-3">
+                <button class="w-full bg-black text-white py-4 rounded-md text-[12px] font-semibold flex items-center justify-center gap-2">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    Enquire Now
+                </button>
+                <button onclick="handleViewAtHomeDesktop()" class="w-full bg-[#555555] text-white py-4 rounded-md text-[12px] font-semibold flex items-center justify-center gap-2">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                    View at Home
+                </button>
+            </div>
+        </aside>
+    </div>
+    <script type="importmap">
+         { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/" } }
+    </script>
+    <script type="module" src="module.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
