@@ -1,4 +1,8 @@
-
+/* Desktop Swatch Style */
+        .swatch-active { 
+            outline: 2px solid #000; 
+            outline-offset: 2px;
+        }
         
         /* Mobile Swatch Style */
         .mobile-swatch-active { 
@@ -22,7 +26,6 @@
         #mobile-menu { transition: transform 0.3s ease-in-out; }
         .menu-hidden { transform: translateX(100%); }
 
-        /* Floating Panel Adjustment */
         @media (min-width: 768px) {
             #config-panel {
                 position: absolute;
@@ -37,5 +40,3 @@
                 z-index: 40;
             }
         }
-
-
