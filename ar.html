@@ -18,23 +18,34 @@
         const params = new URLSearchParams(window.location.search);
         const model = params.get('model') || 'double__sofa.glb';
         const base = window.location.origin;
+        const src = `${base}/${model}`;
 
-        const viewer = document.createElement('model-viewer');
-        viewer.id = 'ar';
-        viewer.setAttribute('ar', '');
-        viewer.setAttribute('ar-modes', 'webxr scene-viewer quick-look');
-        viewer.setAttribute('camera-controls', '');
-        viewer.setAttribute('auto-rotate', '');
-        viewer.setAttribute('shadow-intensity', '1');
-        viewer.setAttribute('alt', 'Sofa');
-        viewer.setAttribute('exposure', '1');
-        viewer.setAttribute('src', `${base}/${model}`);
-        document.getElementById('ar').appendChild(viewer);
+        customElements.whenDefined('model-viewer').then(() => {
+            const viewer = document.createElement('model-viewer');
+            viewer.id = 'ar';
+            viewer.setAttribute('ar', '');
+            viewer.setAttribute('ar-modes', 'webxr scene-viewer quick-look');
+            viewer.setAttribute('ar-scale', 'fixed');
+            viewer.setAttribute('camera-controls', '');
+            viewer.setAttribute('auto-rotate', '');
+            viewer.setAttribute('shadow-intensity', '1');
+            viewer.setAttribute('alt', 'Sofa');
+            viewer.setAttribute('exposure', '1');
+            viewer.setAttribute('src', src);
+            document.getElementById('ar').appendChild(viewer);
 
-        viewer.addEventListener('error', (e) => {
-            console.error('AR load error:', e.detail);
-            document.body.innerHTML = '<div id="error">Could not load the 3D object. Please try a different model.</div>';
+            viewer.addEventListener('error', (e) => {
+                console.error('AR load error:', e.detail);
+                document.body.innerHTML = '<div id="error">Could not load the 3D object. Please try a different model.</div>';
+            });
         });
+
+        const arLink = document.createElement('a');
+        arLink.href = `https://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(src)}&mode=ar_preferred`;
+        arLink.textContent = 'Open directly in AR camera';
+        arLink.style.cssText = 'display:block;padding:16px;text-align:center;font-family:sans-serif;color:#000;background:#fff;text-decoration:underline;';
+        arLink.id = 'arLink';
+        document.body.appendChild(arLink);
     </script>
 </body>
 </html>
