@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View at Home - Sofa</title>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { width: 100%; height: 100%; overflow: hidden; background: #f8f8f8; }
+        model-viewer { width: 100%; height: 100%; }
+    </style>
+</head>
+<body>
+    <model-viewer
+        id="arViewer"
+        ar
+        ar-modes="webxr scene-viewer quick-look"
+        camera-controls
+        auto-rotate
+        shadow-intensity="1"
+        alt="Sofa"
+        src=""
+        ios-src=""
+        exposure="1"
+        environment-image="neutral"
+    ></model-viewer>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const model = params.get('model') || 'double__sofa.glb';
+        const base = window.location.origin;
+        const viewer = document.getElementById('arViewer');
+        viewer.setAttribute('src', `${base}/${model}`);
+        viewer.setAttribute('ios-src', `${base}/${model.replace('.glb', '.usdz')}`);
+    </script>
+</body>
+</html>
