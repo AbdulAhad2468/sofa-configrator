@@ -4,34 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View at Home - Sofa</title>
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { width: 100%; height: 100%; overflow: hidden; background: #f8f8f8; }
-        model-viewer { width: 100%; height: 100%; }
+        #ar { width: 100%; height: 100%; }
+        #error { padding: 20px; color: #333; font-family: sans-serif; }
     </style>
 </head>
 <body>
-    <model-viewer
-        id="arViewer"
-        ar
-        ar-modes="webxr scene-viewer quick-look"
-        camera-controls
-        auto-rotate
-        shadow-intensity="1"
-        alt="Sofa"
-        src=""
-        ios-src=""
-        exposure="1"
-        environment-image="neutral"
-    ></model-viewer>
+    <div id="ar"></div>
     <script>
         const params = new URLSearchParams(window.location.search);
         const model = params.get('model') || 'double__sofa.glb';
         const base = window.location.origin;
-        const viewer = document.getElementById('arViewer');
+
+        const viewer = document.createElement('model-viewer');
+        viewer.id = 'ar';
+        viewer.setAttribute('ar', '');
+        viewer.setAttribute('ar-modes', 'webxr scene-viewer quick-look');
+        viewer.setAttribute('camera-controls', '');
+        viewer.setAttribute('auto-rotate', '');
+        viewer.setAttribute('shadow-intensity', '1');
+        viewer.setAttribute('alt', 'Sofa');
+        viewer.setAttribute('exposure', '1');
         viewer.setAttribute('src', `${base}/${model}`);
-        viewer.setAttribute('ios-src', `${base}/${model.replace('.glb', '.usdz')}`);
+        document.getElementById('ar').appendChild(viewer);
+
+        viewer.addEventListener('error', (e) => {
+            console.error('AR load error:', e.detail);
+            document.body.innerHTML = '<div id="error">Could not load the 3D object. Please try a different model.</div>';
+        });
     </script>
 </body>
 </html>
