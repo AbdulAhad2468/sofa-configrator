@@ -68,7 +68,11 @@ function updateModel() {
         sofaMesh = gltf.scene;
         const box = new THREE.Box3().setFromObject(sofaMesh);
         const center = box.getCenter(new THREE.Vector3());
+        const size = box.getSize(new THREE.Vector3());
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scale = maxDim > 0 ? 2.5 / maxDim : 1;
         sofaMesh.position.sub(center);
+        sofaMesh.scale.setScalar(scale);
         scene.add(sofaMesh);
         applyColor(fabrics[0].color, null);
     });
@@ -133,7 +137,8 @@ function applyColor(hex, isOttomanOnly) {
         if (child.isMesh && !child.name.toLowerCase().includes('leg')) {
             const isOtt = child.name.toLowerCase().includes('ottoman');
             if (isOttomanOnly === null || (isOttomanOnly && isOtt) || (!isOttomanOnly && !isOtt)) {
-                child.material.color.set(hex);
+                const materials = Array.isArray(child.material) ? child.material : [child.material];
+                materials.forEach(m => m.color.set(hex));
             }
         }
     });

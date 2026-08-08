@@ -2,7 +2,7 @@
       startAR();
   }
         function startAR() {
-            const currentModel = document.getElementById('modelSelectMobile').value;
+            const currentModel = document.getElementById('modelSelect').value;
             const modelUrl = `${window.location.origin}/${currentModel}`;
             const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
