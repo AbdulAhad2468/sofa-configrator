@@ -1,4 +1,8 @@
-  function handleViewAtHomeDesktop() { alert("The 'View at Home' AR feature is available on mobile devices."); }
+  function handleViewAtHomeDesktop() {
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      if (isMobile) { startAR(); }
+      else { alert("The 'View at Home' AR feature is available on mobile devices."); }
+  }
         function startAR() {
             const currentModel = document.getElementById('modelSelectMobile').value;
             const modelUrl = `${window.location.origin}/${currentModel}`;
