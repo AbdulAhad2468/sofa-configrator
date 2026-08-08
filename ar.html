@@ -40,9 +40,15 @@
             });
         });
 
+        const isAndroid = /android/i.test(navigator.userAgent);
         const arLink = document.createElement('a');
-        arLink.href = `https://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(src)}&mode=ar_preferred`;
-        arLink.textContent = 'Open directly in AR camera';
+        if (isAndroid) {
+            arLink.href = `intent://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(src)}&mode=ar_preferred#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.chrome=1;end;`;
+            arLink.textContent = 'Open AR on your Pixel';
+        } else {
+            arLink.href = `https://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(src)}&mode=ar_preferred`;
+            arLink.textContent = 'Open directly in AR camera';
+        }
         arLink.style.cssText = 'display:block;padding:16px;text-align:center;font-family:sans-serif;color:#000;background:#fff;text-decoration:underline;';
         arLink.id = 'arLink';
         document.body.appendChild(arLink);
